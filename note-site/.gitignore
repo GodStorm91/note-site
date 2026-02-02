@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.bash_history
+bear-sync-backup/
+bear-callback-debug/
+sync.log
+grizzly-open-tag-debug.json
+.env
+.DS_Store

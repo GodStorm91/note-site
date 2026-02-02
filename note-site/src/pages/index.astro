@@ -1,0 +1,140 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const notesDir = new URL('../content/notes/', import.meta.url).pathname;
+
+type NoteMeta = { slug: string; title: string; category: string; mtime: number };
+
+function collectNotes(dir: string, baseDir: string): NoteMeta[] {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  const notes: NoteMeta[] = [];
+
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      notes.push(...collectNotes(fullPath, baseDir));
+    } else if (entry.isFile() && (entry.name.endsWith('.md') || entry.name.endsWith('.mdx'))) {
+      const relPath = path.relative(baseDir, fullPath);
+      const relDir = path.dirname(relPath) === '.' ? '' : path.dirname(relPath);
+      const slug = path.basename(entry.name).replace(/\.mdx?$/, '');
+      const title = slug
+        .replace(/-/g, ' ')
+        .replace(/\b\w/g, (c) => c.toUpperCase());
+      const stat = fs.statSync(fullPath);
+      notes.push({ slug, title, category: relDir, mtime: stat.mtimeMs });
+    }
+  }
+
+  return notes;
+}
+
+let rawNotes: NoteMeta[] = [];
+try {
+  rawNotes = collectNotes(notesDir, notesDir);
+} catch {
+  rawNotes = [];
+}
+
+// De-duplicate by slug: if a note appears in multiple tag folders, pick the shortest category path
+const bySlug = new Map<string, NoteMeta>();
+for (const note of rawNotes) {
+  const existing = bySlug.get(note.slug);
+  if (!existing) {
+    bySlug.set(note.slug, note);
+  } else {
+    const existingDepth = existing.category.split('/').filter(Boolean).length;
+    const newDepth = note.category.split('/').filter(Boolean).length;
+    // Prefer newer mtime; if equal, prefer shallower category
+    if (note.mtime > existing.mtime || (note.mtime === existing.mtime && newDepth < existingDepth)) {
+      bySlug.set(note.slug, note);
+    }
+  }
+}
+
+// Sort all notes by modified time desc for display order
+const flatNotes = Array.from(bySlug.values()).sort((a, b) => b.mtime - a.mtime);
+
+// Group by category path ("", "publish", "publish/project-x", ...)
+const grouped = flatNotes.reduce((acc, note) => {
+  const key = note.category || 'root';
+  if (!acc[key]) acc[key] = [] as NoteMeta[];
+  acc[key].push(note);
+  return acc;
+}, {} as Record<string, NoteMeta[]>);
+
+// Within each category, keep notes ordered by mtime desc
+for (const key of Object.keys(grouped)) {
+  grouped[key].sort((a, b) => b.mtime - a.mtime);
+}
+
+// Sort categories: root first, then alphabetically
+const categories = Object.keys(grouped).sort((a, b) => {
+  if (a === 'root') return -1;
+  if (b === 'root') return 1;
+  return a.localeCompare(b);
+});
+
+---
+
+<BaseLayout title="Notes">
+  <section class="card">
+    <div style="display:flex; justify-content:space-between; gap:1rem; align-items:center; margin-bottom:0.75rem;">
+      <div>
+        <h1 style="margin:0 0 0.25rem; font-size:1.6rem;">Notes</h1>
+        <p class="muted" style="margin:0;">Mấy note public của mày (tag <code>#publish</code> trong Bear), auto build từ Markdown.</p>
+      </div>
+      <div>
+        <input
+          id="search-input"
+          type="search"
+          placeholder="Search notes..."
+          style="padding:0.35rem 0.6rem; border-radius:999px; border:1px solid var(--border-subtle); font-size:0.9rem; min-width:180px;"
+        />
+      </div>
+    </div>
+
+    {flatNotes.length === 0 ? (
+      <p style="margin-top:1rem;">Chưa có note nào sync từ Bear. Thử gắn tag <code>#publish</code> rồi chạy <code>npm run sync-bear</code>.</p>
+    ) : (
+      <div id="notes-list" style="margin-top:0.75rem; display:flex; flex-direction:column; gap:1rem;">
+        {categories.map((cat) => (
+          <section class="notes-section" data-category={cat}>
+            <h2 style="font-size:1rem; margin:0 0 0.35rem;">
+              {cat === 'root' ? 'Other' : cat}
+            </h2>
+            <ul style="margin:0; padding-left:1.1rem;">
+              {grouped[cat].map((note) => (
+                <li class="note-item" data-title={note.title.toLowerCase()} data-category={note.category.toLowerCase()}>
+                  <a href={`/notes/${note.slug}`}>{note.title}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    )}
+  </section>
+
+  <script>
+    const input = document.getElementById('search-input');
+    const sections = Array.from(document.querySelectorAll('.notes-section'));
+
+    input?.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      sections.forEach((section) => {
+        const items = Array.from(section.querySelectorAll('.note-item'));
+        let anyVisible = false;
+        items.forEach((li) => {
+          const title = li.getAttribute('data-title') || '';
+          const cat = li.getAttribute('data-category') || '';
+          const match = !q || title.includes(q) || cat.includes(q);
+          (li as HTMLElement).style.display = match ? '' : 'none';
+          if (match) anyVisible = true;
+        });
+        (section as HTMLElement).style.display = anyVisible ? '' : 'none';
+      });
+    });
+  </script>
+</BaseLayout>

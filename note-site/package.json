@@ -1,0 +1,19 @@
+{
+  "name": "note-site",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "sync-bear": "bash scripts/run-bear-export.sh",
+    "bear-callback": "node scripts/bear-callback-server.mjs"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^3.0.0",
+    "astro": "^4.0.0",
+    "github-markdown-css": "^5.8.1",
+    "marked": "^12.0.2",
+    "github-markdown-css": "^5.5.1"
+  }
+}

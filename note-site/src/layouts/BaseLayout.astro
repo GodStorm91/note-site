@@ -1,0 +1,237 @@
+---
+const { title = 'Notes', description = '' } = Astro.props;
+---
+
+<html lang="en" class="theme-light">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+  </head>
+  <body>
+    <div class="app-root">
+      <header class="app-header">
+        <div class="app-header-left">
+          <a href="/" class="app-logo">📝 {title}</a>
+        </div>
+        <div class="app-header-right">
+          <a href="/about" class="header-link">About</a>
+          <button id="theme-toggle" class="theme-toggle" type="button">🌙</button>
+        </div>
+      </header>
+      <main class="app-main">
+        <slot />
+      </main>
+    </div>
+
+    <script>
+      const root = document.documentElement;
+      const btn = document.getElementById('theme-toggle');
+      const stored = localStorage.getItem('note-theme');
+      if (stored === 'dark') {
+        root.classList.remove('theme-light');
+        root.classList.add('theme-dark');
+        if (btn) btn.textContent = '☀️';
+      }
+      btn?.addEventListener('click', () => {
+        const isDark = root.classList.toggle('theme-dark');
+        root.classList.toggle('theme-light', !isDark);
+        localStorage.setItem('note-theme', isDark ? 'dark' : 'light');
+        btn.textContent = isDark ? '☀️' : '🌙';
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  :global(body) {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  }
+
+  :global(html.theme-light) {
+    /* Catppuccin Latte inspired */
+    --bg: #eff1f5;
+    --bg-card: #ffffff;
+    --text: #4c4f69;
+    --muted: #6c6f85;
+    --accent: #1e66f5;
+    --border-subtle: #ccd0da;
+    --code-bg: #e6e9ef;
+  }
+
+  :global(html.theme-dark) {
+    /* Catppuccin Mocha inspired */
+    --bg: #1e1e2e;
+    --bg-card: #181825;
+    --text: #cdd6f4;
+    --muted: #a6adc8;
+    --accent: #89b4fa;
+    --border-subtle: #313244;
+    --code-bg: #11111b;
+  }
+
+  .app-root {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  :global(.markdown-body) {
+    color: var(--text);
+  }
+
+  :global(.markdown-body h1),
+  :global(.markdown-body h2),
+  :global(.markdown-body h3),
+  :global(.markdown-body h4) {
+    color: var(--text);
+  }
+
+  :global(.markdown-body table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.75rem 0 1rem;
+    font-size: 0.9rem;
+  }
+
+  :global(.markdown-body th),
+  :global(.markdown-body td) {
+    border: 1px solid var(--border-subtle);
+    padding: 0.45rem 0.6rem;
+  }
+
+  :global(.markdown-body th) {
+    background: color-mix(in srgb, var(--bg-card) 80%, var(--accent) 10%);
+    font-weight: 600;
+  }
+
+  :global(.markdown-body tr:nth-child(even) td) {
+    background: color-mix(in srgb, var(--bg-card) 90%, var(--border-subtle) 10%);
+  }
+
+  .app-header {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .app-logo {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text);
+  }
+
+  .app-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .header-link {
+    text-decoration: none;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .header-link:hover {
+    color: var(--accent);
+  }
+
+  .theme-toggle {
+    border: 1px solid var(--border-subtle);
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 999px;
+    padding: 0.25rem 0.65rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+
+  :global(html.theme-dark) .theme-toggle {
+    background: rgba(15, 23, 42, 0.9);
+  }
+
+  .app-main {
+    max-width: 960px;
+    margin: 0 auto 3rem;
+    padding: 0 1.25rem 2rem;
+  }
+
+  :global(.card) {
+    background: var(--bg-card);
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+    padding: 1.5rem 1.7rem;
+  }
+
+  :global(html.theme-dark .card) {
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+  }
+
+  :global(.muted) {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  :global(a) {
+    color: var(--accent);
+  }
+
+  :global(code),
+  :global(pre) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      'Liberation Mono', 'Courier New', monospace;
+  }
+
+  :global(pre) {
+    background: var(--code-bg);
+    color: #cdd6f4; /* catppuccin mocha text */
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-subtle);
+  }
+
+  :global(pre code) {
+    background: transparent;
+    padding: 0;
+  }
+
+  /* basic catppuccin-style highlight colors */
+  :global(code[class*="language-"]),
+  :global(pre code[class*="language-"]),
+  :global(.hljs) {
+    color: #cdd6f4;
+  }
+
+  :global(.hljs-keyword),
+  :global(.hljs-selector-tag),
+  :global(.hljs-literal) {
+    color: #cba6f7;
+  }
+
+  :global(.hljs-string),
+  :global(.hljs-attr),
+  :global(.hljs-template-tag),
+  :global(.hljs-template-variable) {
+    color: #a6e3a1;
+  }
+
+  :global(.hljs-number),
+  :global(.hljs-symbol),
+  :global(.hljs-bullet) {
+    color: #f9e2af;
+  }
+
+  :global(.hljs-comment),
+  :global(.hljs-quote) {
+    color: #6c7086;
+    font-style: italic;
+  }
+</style>

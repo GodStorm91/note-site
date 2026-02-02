@@ -1,0 +1,68 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import { marked } from 'marked';
+import 'github-markdown-css/github-markdown-light.css';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const notesDir = new URL('../../content/notes/', import.meta.url).pathname;
+  let files: string[] = [];
+
+  try {
+    files = fs.readdirSync(notesDir).filter((f) => f.endsWith('.md') || f.endsWith('.mdx'));
+  } catch {
+    files = [];
+  }
+
+  const paths = files.map((file) => ({
+    params: { slug: file.replace(/\.mdx?$/, '') },
+  }));
+
+  return paths;
+}
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  throw new Error('Missing slug');
+}
+
+const notesDir = new URL('../../content/notes/', import.meta.url).pathname;
+const filePathMd = path.join(notesDir, `${slug}.md`);
+const filePathMdx = path.join(notesDir, `${slug}.mdx`);
+
+let content = '';
+
+if (fs.existsSync(filePathMd)) {
+  content = fs.readFileSync(filePathMd, 'utf8');
+} else if (fs.existsSync(filePathMdx)) {
+  content = fs.readFileSync(filePathMdx, 'utf8');
+} else {
+  throw new Error(`Note not found for slug: ${slug}`);
+}
+
+// Rewrite BearImages relative paths to root-relative so Astro can serve from /public/BearImages
+content = content.replace(/\(BearImages\//g, '(/BearImages/');
+
+const title = slug
+  .replace(/-/g, ' ')
+  .replace(/\b\w/g, (c) => c.toUpperCase());
+
+const html = marked.parse(content, { gfm: true, breaks: false });
+---
+
+<BaseLayout title={title}>
+  <a href="/" class="muted" style="text-decoration: none;">← Back to notes</a>
+  <article
+    class="markdown-body card"
+    style="margin-top: 1.25rem; padding-top: 1.25rem;"
+    set:html={html}
+  />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    if (window.hljs) {
+      window.hljs.highlightAll();
+    }
+  </script>
+</BaseLayout>
