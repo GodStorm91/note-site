@@ -4,5 +4,6 @@ import mdx from '@astrojs/mdx';
 export default defineConfig({
   integrations: [mdx()],
   srcDir: 'src',
-  site: 'https://example.com', // đổi thành domain thật sau
+  site: 'https://godstorm91.github.io/note-site',
+  base: '/note-site',
 });
