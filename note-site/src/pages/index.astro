@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const notesDir = new URL('../content/notes/', import.meta.url).pathname;
+const notesDir = path.join(process.cwd(), 'src', 'content', 'notes');
 
 type NoteMeta = { slug: string; title: string; category: string; mtime: number };
 
