@@ -30,10 +30,14 @@ function collectNotes(dir: string, baseDir: string): NoteMeta[] {
   return notes;
 }
 
+console.log('[notes] notesDir =', notesDir);
+
 let rawNotes: NoteMeta[] = [];
 try {
   rawNotes = collectNotes(notesDir, notesDir);
-} catch {
+  console.log('[notes] collected', rawNotes.length, 'files');
+} catch (err) {
+  console.error('[notes] collectNotes error:', err);
   rawNotes = [];
 }
 
