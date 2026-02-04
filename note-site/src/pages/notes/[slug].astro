@@ -6,7 +6,7 @@ import 'github-markdown-css/github-markdown-light.css';
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
-  const notesDir = new URL('../../content/notes/', import.meta.url).pathname;
+  const notesDir = path.join(process.cwd(), 'src', 'content', 'notes');
   let files: string[] = [];
 
   try {
@@ -28,7 +28,7 @@ if (!slug) {
   throw new Error('Missing slug');
 }
 
-const notesDir = new URL('../../content/notes/', import.meta.url).pathname;
+const notesDir = path.join(process.cwd(), 'src', 'content', 'notes');
 const filePathMd = path.join(notesDir, `${slug}.md`);
 const filePathMdx = path.join(notesDir, `${slug}.mdx`);
 
