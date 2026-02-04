@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="en" class="theme-light" data-astro-cid-37fxchfa> <head><meta charset="utf-8"><title>Blade Templating Trong Laravel</title><link rel="stylesheet" href="/_astro/_slug_.CSRUKxnt.css">
+<style>body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,SF Pro Text,sans-serif}html.theme-light{--bg: #eff1f5;--bg-card: #ffffff;--text: #4c4f69;--muted: #6c6f85;--accent: #1e66f5;--border-subtle: #ccd0da;--code-bg: #e6e9ef}html.theme-dark{--bg: #1e1e2e;--bg-card: #181825;--text: #cdd6f4;--muted: #a6adc8;--accent: #89b4fa;--border-subtle: #313244;--code-bg: #11111b}.app-root[data-astro-cid-37fxchfa]{min-height:100vh;background:var(--bg);color:var(--text)}.markdown-body,.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4{color:var(--text)}.markdown-body table{width:100%;border-collapse:collapse;margin:.75rem 0 1rem;font-size:.9rem}.markdown-body img{max-width:min(100%,720px);height:auto;display:block;margin:1.5rem auto;border-radius:12px}.markdown-body th,.markdown-body td{border:1px solid var(--border-subtle);padding:.45rem .6rem}.markdown-body th{background:color-mix(in srgb,var(--bg-card) 80%,var(--accent) 10%);font-weight:600}.markdown-body tr:nth-child(2n) td{background:color-mix(in srgb,var(--bg-card) 90%,var(--border-subtle) 10%)}.app-header[data-astro-cid-37fxchfa]{max-width:960px;margin:0 auto;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between}.app-logo[data-astro-cid-37fxchfa]{text-decoration:none;font-weight:700;font-size:1.05rem;color:var(--text)}.app-header-right[data-astro-cid-37fxchfa]{display:flex;align-items:center;gap:.75rem}.header-link[data-astro-cid-37fxchfa]{text-decoration:none;font-size:.9rem;color:var(--muted)}.header-link[data-astro-cid-37fxchfa]:hover{color:var(--accent)}.theme-toggle[data-astro-cid-37fxchfa]{border:1px solid var(--border-subtle);background:#ffffffb3;border-radius:999px;padding:.25rem .65rem;cursor:pointer;font-size:.85rem}html.theme-dark .theme-toggle[data-astro-cid-37fxchfa]{background:#0f172ae6}.app-main[data-astro-cid-37fxchfa]{max-width:960px;margin:0 auto 3rem;padding:0 1.25rem 2rem}.card{background:var(--bg-card);border-radius:16px;border:1px solid var(--border-subtle);box-shadow:0 18px 40px #0f172a1f;padding:1.5rem 1.7rem}html.theme-dark .card{box-shadow:0 18px 40px #000000b3}.muted{color:var(--muted);font-size:.9rem}a{color:var(--accent)}code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}pre{background:var(--code-bg);padding:.85rem 1rem;border-radius:12px;overflow-x:auto;font-size:.9rem;border:1px solid var(--border-subtle)}pre code{background:transparent;padding:0}html.theme-light pre code,html.theme-light .hljs{color:#4c4f69}html.theme-light .hljs-keyword,html.theme-light .hljs-selector-tag,html.theme-light .hljs-literal{color:#1e66f5}html.theme-light .hljs-string,html.theme-light .hljs-attr,html.theme-light .hljs-template-tag,html.theme-light .hljs-template-variable{color:#40a02b}html.theme-light .hljs-number,html.theme-light .hljs-symbol,html.theme-light .hljs-bullet{color:#df8e1d}html.theme-light .hljs-variable,html.theme-light .hljs-title,html.theme-light .hljs-property,html.theme-light .hljs-function{color:#e64553}html.theme-light .hljs-meta,html.theme-light .hljs-meta .hljs-string{color:#8839ef}html.theme-light .hljs-comment,html.theme-light .hljs-quote{color:#9ca0b0;font-style:italic}html.theme-dark pre code,html.theme-dark .hljs{color:#cdd6f4}html.theme-dark .hljs-keyword,html.theme-dark .hljs-selector-tag,html.theme-dark .hljs-literal{color:#cba6f7}html.theme-dark .hljs-string,html.theme-dark .hljs-attr,html.theme-dark .hljs-template-tag,html.theme-dark .hljs-template-variable{color:#a6e3a1}html.theme-dark .hljs-number,html.theme-dark .hljs-symbol,html.theme-dark .hljs-bullet{color:#f9e2af}html.theme-dark .hljs-variable,html.theme-dark .hljs-title,html.theme-dark .hljs-property,html.theme-dark .hljs-function{color:#f38ba8}html.theme-dark .hljs-meta,html.theme-dark .hljs-meta .hljs-string{color:#fab387}html.theme-dark .hljs-comment,html.theme-dark .hljs-quote{color:#6c7086;font-style:italic}
+</style><script type="module" src="/_astro/hoisted.B5IWR9Up.js"></script></head> <body data-astro-cid-37fxchfa> <div class="app-root" data-astro-cid-37fxchfa> <header class="app-header" data-astro-cid-37fxchfa> <div class="app-header-left" data-astro-cid-37fxchfa> <a href="/" class="app-logo" data-astro-cid-37fxchfa>📝 Blade Templating Trong Laravel</a> </div> <div class="app-header-right" data-astro-cid-37fxchfa> <a href="/about" class="header-link" data-astro-cid-37fxchfa>About</a> <button id="theme-toggle" class="theme-toggle" type="button" data-astro-cid-37fxchfa>🌙</button> </div> </header> <main class="app-main" data-astro-cid-37fxchfa>  <a href="/" class="muted" style="text-decoration: none;">← Back to notes</a> <article class="markdown-body card" style="margin-top: 1.25rem; padding-top: 1.25rem;"><h1># Blade Templating trong Laravel</h1>
+<p>Những ai đã từng sử dụng PHP chắc hẳn đều thấy nhức đầu khi dùng php để render ra view chúng ta phải <code>&lt;?php</code> khá nhiều, và đôi khi còn cần phải dùng <code>htmlentities</code> để escape kí tự html. Thật là khổ sở phải không nào. May mắn thay, Laravel là một framework hỗ trợ khá tốt cho việc render ra view, với việc buit-in một templating engine khá tốt gọi là Blade (chắc là do Blade sử dụng <code>{{</code> và <code>}}</code> để đóng mở tag  - Giống như con dao cạo vậy). Thật ra Blade khá giống với Razor templating của MVC framework (Microsoft .NET), giúp tăng tính dễ đọc của code - tính chính xác - dễ học + cực kì mạnh mẽ với cấu trúc kế thừa view dễ hiểu và dễ dàng mở rộng. </p>
+<p>Ví dụ :</p>
+<pre><code class="language-php">// Kiểm tra xem User login hay chưa
+@if (Auth::check())
+    //Hiển thị đoạn Hello {tên user}, link sang profile page
+    Hello {{Auth::user()-&gt;name}},&lt;a href=&#39;/profile&#39;&gt; Profile &lt;/a&gt;
+@else
+    //Hiển thị link login
+    &lt;a href=&#39;/login&#39;&gt;Login&lt;/a&gt;
+</code></pre>
+<p>Bài viết này sẽ đưa bạn đến các vấn đề</p>
+<ul>
+<li>Giới thiệu về blade</li>
+<li>Các cấu trúc của Blade<ul>
+<li>Điều kiện</li>
+<li>Vòng lặp</li>
+</ul>
+</li>
+<li>Kế thừa blade</li>
+<li>View composer và Inject service vào trong view </li>
+<li>Tuỳ biến / Tạo mới chỉ lệnh (directive) trong blade.</li>
+</ul>
+<p><em>Note:</em> Bạn quen với Symfony và Twig templating hơn Blade, bạn có thể enable Twig templating thay vì Blade theo hướng dẫn như bên dưới : <a href="https://github.com/rcrowe/TwigBridge">https://github.com/rcrowe/TwigBridge</a></p>
+<h2>Giới thiệu về Blade Templating - Cách xuất data ra view</h2>
+<p><code>{{</code> và <code>}}</code> dùng để wrap những phần mà bạn muốn PHP xuất ra view. ví dụ <code>{{ $variable }}</code>  thì tương đương với <code>&lt;?= $variable ?&gt;</code> . Nhưng cũng có điểm khác biệt khi sử dụng blade là, Blade tự động escape cho chúng ta. Có nghĩa <code>{{ $variable }}</code> chính xác hơn là giống với <code>&lt;?= htmlentities($variable) ?&gt;</code> Nếu chúng ta muốn echo mà không escape thì có thể gọi <code>{{!! $variable !!}</code>  và blade sẽ không escape.</p>
+<blockquote>
+<p><em>Note</em>: Chúng ta có thể hỏi làm sao phân biệt giữa front-end frameworks (handlebars chẳng hạn) và blade, chúng ta có thể thêm <code>@</code> vào trước để phân biệt giữa blade và handlebars như bên dưới </p>
+</blockquote>
+<pre><code class="language-php">// Blade templating
+{{ $variable }}
+// thêm @ vào đầu, blade sẽ bỏ qua và output toàn bộ &quot;{{ $variable }}&quot;
+@{{ $variable }}
+</code></pre>
+<blockquote>
+</blockquote>
+<h2>Các cấu trúc để điều khiển luồng (Control Structures)</h2>
+<p>Các cấu trúc điều khiển luồng của blade cũng tương tự như khi chúng ta dùng PHP thuần cũng bao gồm, <code>if, else</code> , <code>foreach</code> , <code>while</code> …</p>
+<h3>Điều kiện (Conditionals)</h3>
+<p>Blade cung cấp cho ta các cấu trúc điều kiện như bên dứoi </p>
+<h4>@if :</h4>
+<p><code>@if</code> sẽ được compile thành <code>&lt;?php if ($condition) : ?&gt;</code> . Các bạn có thể xác nhận lại thông qua việc kiểm tra view tương ứng trong <code>app\storage\views\{view_hash_id}.php</code> </p>
+<pre><code class="language-php">@if count($tasks) == 1
+    ban con lai 1 task
+@elseif count($tasks) == 0
+    khong con task nao trong he thong
+@else
+    Co tat ca {{ count($tasks) }} tasks con lai
+@endif
+</code></pre>
+<h4>@unless</h4>
+<p><code>@unless</code> tương tự như <code>@if</code> , và nó <code>@unless ($condition)</code> sẽ tương đương với <code>@if (!$condition)</code></p>
+<pre><code class="language-php">@unless (Auth::check())
+    Please register before proceed.
+@endunless
+</code></pre>
+<h3>Vòng lặp (Loops)</h3>
+<h4>@for, @foreach, và @while:</h4>
+<p>Tương đương với  PHP thuần là <code>for, foreach , while</code> tuy nhiên có 1 lưu ý ở bên dưới </p>
+<blockquote>
+<p><em>Lưu ý:</em> Khi sử dụng <code>@foreach</code> thì Laravel sẽ tự động tạo một <code>stdClass</code> object là <code>$loop</code> . Chúng ta có thể dùng biến <code>$loop</code> để tham chiếu đến các thuộc tính như: <code>first</code>, <code>last</code>, <code>depth</code> … 
+Tham khảo về biến loop ở đây:  <a href="https://laravel.com/docs/5.6/blade#loops">Blade Templates - Laravel - The PHP Framework For Web Artisans</a></p>
+</blockquote>
+<h2>Kế thừa</h2>
+<p>Blade cung cấp cho ta một cấu trúc để có thể kế thừa, chỉnh sửa hoặc include các view khác nhau.</p>
+<h3>Định nghĩa thành phần trong view bằng @section, @show và @yield</h3>
+<p>Bên dưới là đoạn code mẫu của <code>resources/views/layouts/master.blade.php</code></p>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt; My site | yield(&#39;title&#39;, &#39;Home Page&#39;) &lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div class=&quot;container&quot;&gt;
+            @yield(&#39;content&#39;)
+        &lt;/div&gt;
+        @section(&#39;footerScripts&#39;)
+            &lt;script src=&#39;app.js&#39;&gt;&lt;/script&gt;
+        @show
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Chúng ta sử dụng hàm <code>yield</code> ở 2 chỗ, và <code>@section</code> ở một chỗ.<br>Tất cả đều có điểm chung là chúng sẽ có thể được mở rộng bởi các view con. 
+Vậy thì có gì khác ở đây.</p>
+<ul>
+<li><code>@yield(‘content’)</code> : không có gía trị default, có nghĩa là nếu lớp con không thực hiện extend phần <code>content</code> thì sẽ không có gì hiển thị cả</li>
+<li><code>yield(‘title’, ‘Home page’)</code>: ở đây chúng ta thiết lập giá trị mặc định cho <code>title</code> là <code>Home page</code>, tuy nhiên lớp con có thể overwrite, và giá trị <code>Home page</code> chỉ xuất hiện khi lớp con không thực hiện extends phần <code>title</code></li>
+<li><code>@section</code> … <code>@show</code> thì định nghĩa cả giá trị default và cho phép lớp con extends giá trị đó. Chúng ta có thể cho <code>footerScripts</code> include file <code>app.js</code> bằng chỉ lệnh <code>@parent</code> .</li>
+</ul>
+<p>Bên dưới là ví dụ một views con extend view <code>master.blade.php</code></p>
+<pre><code class="language-php">// resources/views/dashboard.blade.php
+@extends(&#39;layouts.master&#39;)
+
+@section(&#39;title&#39;, &#39;Dashboard&#39;) // overwrite `Home Page`
+
+@section(&#39;content&#39;)
+Welcome to your Dashboard
+@endsection
+
+@section(&#39;footerScripts&#39;)
+    @parent
+    &lt;script src=&#39;dashboard.js&#39;&gt;&lt;/script&gt;
+@endsection
+</code></pre>
+<ul>
+<li><code>@extends(&#39;layouts.master’)</code>: định nghĩa views này sẽ được kế thừa từ views <code>layouts.master</code></li>
+<li><code>@section(&#39;title&#39;, &#39;Dashboard&#39;)</code>: Page này sẽ có title là <code>Dashboard</code> thay vì là <code>Home page</code> , default của views <code>layouts.master</code> đã bị overwrite.</li>
+<li>@section : định nghĩa từng section của views con. Nếu ta có sử dụng chỉ lệnh <code>@parent</code> thì nội dung của section từ view cha sẽ được insert vào view con và chúng ta có thể tuỳ biến thêm nội dung. Ví dụ ở trên chúng ta mở rộng view cha, sau đó thêm thư viện <code>dashboard.js</code></li>
+</ul>
+<h3>Các chỉ lệnh (directives) dùng để định nghĩa cấu trúc view</h3>
+<h4>@extends</h4>
+<p>Với chỉ lệnh <code>@extends</code> chúng ta định nghĩa, views <code>dashboard</code> sẽ được kế thừa từ views <code>layouts.master</code>.  Mỗi một views chỉ được kế thừa duy nhất một views cha khác.</p>
+<h4>@sections và @endsections</h4>
+<p>Chúng ta định nghĩa một section bằng từ khoá <code>@section</code> và <code>@endsection</code>  tuy nhiên ở lớp cha, (ví dụ ở trên là <code>layouts.master</code> chúng ta kết thúc định nghĩa section không phải bằng chỉ lệnh <code>@endsection</code> mà bằng chỉ lệnh <code>@show</code>. </p>
+<h4>@parent</h4>
+<p>Khi một view con mở rộng một view cha, chúng ta sẽ có 2 lựa chọn </p>
+<ul>
+<li>Overwrite: ghi đè lên định nghĩa của view cha. Chúng ta sẽ define nội dung của view con trong khung section</li>
+<li>Extends : mở rộng, add thêm thông tin vào view cha, bằng cách sử dụng chỉ  lệnh <code>@parent</code> để lấy nội dung ở view cha. Ví dụ ở trên chúng ta muốn include file javascript <code>app.js</code> mà views cha đã include rồi nên ta thêm chỉ lệnh <code>@parent</code> .</li>
+</ul>
+<h4>@include</h4>
+<p>Ta có thể include một view khác vào đồng thời truyền thêm parameters cho chúng thông qua chỉ lệnh <code>include</code>. Những biến số nằm trong parent view cũng có thể được access ở included view.</p>
+<pre><code class="language-php">// View cha
+&lt;div class=&quot;content&quot; data-page-name=&quot;{{ $pageName }}&quot;
+    You should sign up for our beautiful app!!!
+    @include(&#39;sign-up&#39;, [&#39;text&#39; =&gt; &#39;Check it out&#39;]);
+&lt;/div&gt;
+// sign-up views
+&lt;div class=&#39;button&#39; data-page-name=&quot;{{ $pageName }}&quot;&gt; // pageName là biến số của View cha
+    {{ $text }} //$text là biến số được view cha truyền vào
+&lt;/div&gt;
+</code></pre>
+<h4>@each</h4>
+<p>Đôi khi chúng ta cần thực hiện lặp với từng models sẽ được truyền 1 partials view, chúng ta có thể thực hiện điều này thông qua chỉ lệnh <code>@each</code></p>
+<pre><code class="language-php">@each(&#39;view.name&#39;, $jobs, &#39;job&#39;, &#39;view.empty&#39;)
+</code></pre>
+<blockquote>
+<p><em>Lưu ý</em> : khi sử dụng <code>@each</code> thì chúng ta không truy cập được biến của view cha nữa. Nếu cần phải truy cập chúng ta có thể dùng <code>@foreach</code> rồi <code>@include</code> để truy cập.</p>
+</blockquote>
+<h3>View Composer và inject Service component vào trong Views</h3>
+<h4>Binding thông qua View composers</h4>
+<p><em>View composers</em>: view composer sẽ cho phép chúng ta định nghĩa /Khi có bất kì view nào được load thì phải có data tương ứng được truyền cho chúng/. Giả sử chúng ta có một partial view gọi là <code>sidebars</code> và trong sidebars luôn luôn có 7 bài post gần nhất hiển thị. Chúng ta có thể dùng view composer để share 7 bài post gần nhất đó. Và chúng ta có đến 3 cách để thực hiện điều này</p>
+<ul>
+<li>Chia sẻ một biến global (bất kì view nào cũng access được biến này</li>
+<li>Chia sẻ thông qua closure</li>
+<li>Chia sẻ thông qua class</li>
+</ul>
+<h4>Chia sẻ một biến global</h4>
+<p>Cách nhanh nhất và đơn giản nhất. Tuy nhiên có nhược điểm là không phải view nào cũng cần đến 7 bài post gần nhất</p>
+<pre><code class="language-php">//Service provider
+public function boot(){
+    view()-&gt;share(&#39;posts&#39;, Post::recent());
+}
+</code></pre>
+<p>Chúng ta sử dụng <code>view()-&gt;share()</code> để thực hiện điều này. Chúng ta có thể code đoạn settings trên bên trong <code>App\Providers\ServiceProviders</code>  hàm <code>boot</code></p>
+<h4>Closure based</h4>
+<p>Sử dụng closure để chia sẻ một biến với một view như bên dưới </p>
+<pre><code class="language-php">view()-&gt;composer(&#39;partials.sidebar&#39;, function($view){
+    $view-&gt;with(&#39;posts, Post::recent());
+});
+</code></pre>
+<p>Chúng ta dùng <code>view()-&gt;composer()</code> để thực hiện chia sẻ, tham số đầu tiên là tên của views mà chúng ta muốn chia sẻ, ở đây là <code>partials.sidebar</code> chúng ta hoàn toàn có thể chia sẻ với 1 mảng tên các views. như bên dưới :</p>
+<pre><code class="language-php">view()-&gt;composer([
+&#39;partials.sidebar&#39;,
+&#39;partials.footer&#39;,
+&#39;partials.header&#39;,
+], function($view){
+    $view-&gt;with(&#39;posts, Post::recent());
+});
+</code></pre>
+<p>Chúng ta có thể chia sẻ biến <code>posts</code> với rất nhiều views thông qua phương pháp trên. Tất nhiên là mỗi lần chúng ta lại phải đi cập nhật cái list view được chia sẻ này…</p>
+<h4>Class based (ViewComposer class)</h4>
+<p>Cách mạnh nhất và cũng đưa ta đến khả năng tuỳ biến cao nhất là sử dụng ViewComposer. Ở đây thay vì dùng closure thì chúng ta sẽ tạo hẳn một class mới và viết logic chia sẻ biến bên trong method <code>composer</code> của class đó.  Các step để thực hiện bao gồm</p>
+<ul>
+<li>Viết một class <code>RecentPostsComposer</code> chẳng hạn </li>
+<li>Viết logic chia sẻ biến bên trong method <code>composer</code> của class vừa tạo </li>
+<li>Binding composer vừa tạo vào Service Provider. Mình lười thì mình hay binding thẳng vào trong <code>AppServiceProvider</code> tuy nhiên các bạn nên cấu trúc một Service Provider chuyên về ViewComposer, và chúng ta sẽ binding trong Service Provider đó như trong bài này <a href="https://viblo.asia/p/huong-dan-su-dung-view-composer-trong-laravel-53-3P0lPONbZox">https://viblo.asia/p/huong-dan-su-dung-view-composer-trong-laravel-53-3P0lPONbZox</a></li>
+</ul>
+<p><em>Code tham khảo</em></p>
+<pre><code class="language-php">namespace App\Http\ViewComposers;
+
+use App\Post;
+use Illuminate\Contracts\View\View;
+
+class RecentPostComposer{
+    //Constructor
+    public function __construct(Post $post){
+        $this-&gt;post = $post;
+    }
+    // Compose view, thêm những biến chúng ta muốn chia sẻ vào đây.
+    public function compose(View $view){
+        $view-&gt;with(&#39;posts&#39;, $this-&gt;posts-&gt;recent());
+    }
+}
+
+//Binding bên trong App service Provider
+public function boot(){
+    ...
+    view()-&gt;composer(
+    &#39;partials.sidebar&#39;,
+    \App\Http\ViewComposers\RecentPostsComposer::class);
+}
+ 
+</code></pre>
+<p>Chúng ta có thể thấy việc binding tương tự như khi chúng ta dùng closure, chúng ta truyền tên class và Laravel sẽ tự động chạy hàm <code>compose</code> trong class được chỉ định và trả về 7 bài viết gần nhất.</p>
+<h4>Inject Service component vào trong blade</h4>
+<p>Chúng ta có 2 cách để inject một service vào trong blade. 
+Cách thứ nhất là thông qua route definition như bên dưới </p>
+<pre><code class="language-php">Route::get(&#39;backend/sales&#39;, function(SalesService $salesSvc){
+    return view(&#39;sales.graph&#39;)
+    -&gt;with(&#39;salesSvc&#39;, $salesSvc);
+}
+</code></pre>
+<p>và phía blade có thể sử dụng biến <code>$salesSvc</code> thoải mái. 
+Cách thứ hai là chúng ta có thể inject service vào trong trong blade view như bên dưới :</p>
+<pre><code class="language-php">// sales/graph.blade.php
+@inject(&#39;salesSvc&#39;, &#39;App\Services\SalesService&#39;);
+Total sales is: {{ $salesSvc-&gt;total() }}
+</code></pre>
+<p>Ta thấy việc inject Services thông qua <code>@inject</code> giúp chúng ta dễ dàng gọi được các hàm của Services mà không cần phải chỉnh sửa <code>Controllers</code> hay định nghĩa <code>Routes</code>.</p>
+<h3>Tuỳ biến chỉ lệnh của blade (Blade Directives)</h3>
+<p>Cuối cùng, các bạn có thể tự hỏi, chúng ta có thể tự viết chỉ lệnh của riêng mình như khi chúng ta custom JSTL không?, câu trả lời tất nhiên là “CÓ” .
+Giả sử chúng ta thường gặp phải nhất là check quyền chẳng hạn </p>
+<pre><code class="language-php">@if (Auth::check() ) //đoạn này chúng ta thấy lặp đi lặp lại cực nhiều 
+You are logging in
+@else
+Please login
+@endif
+</code></pre>
+<p>Mình muốn rút gọn lại thành:</p>
+<pre><code class="language-php">@ifLoggedIn
+    You are logging in
+@else
+    Please login
+@endif
+</code></pre>
+<p>Điều này là hoàn toàn có thể nếu chúng ta như bên dưới </p>
+<pre><code class="language-php">//AppServiceProvider
+public function boot(){
+    Blade::directive(&#39;ifLoggedIn&#39;, function(){
+        return &quot;&lt;?php if (auth()-&gt;check()): ?&gt;&quot;;
+    });
+}
+</code></pre>
+<p>Ở đoạn code trên chúng ta trả về một string và sẽ được thực thi bởi PHP.  Điều này có nghĩa gì? Chúng ta sẽ giấu tất cả những logic phức tạp <code>isHuman() &amp;&amp; age() &gt; 18</code> … vâng vâng phía sau những chỉ lệnh như <code>@ifAdult</code> chẳng hạn. Chúng ta sẽ không cần phải lặp đi lặp lại chúng và khi logic <code>ifAdult</code> thay đổi, chúng ta chỉ việc update lại logic của chỉ lệnh.</p>
+<h2>Kết luận</h2>
+<p>Blade là một công cụ dùng để render view cực kì hiệu quả của Laravel với mục tiêu trong sáng - chính xác - và mang tính biểu hiện. Chúng ta đơn giản hoá việc sử dụng <code>&lt;?php echo ?&gt;</code> với blade. Ngoài ra blade cũng hỗ trợ cực tốt cho việc cấu trúc kế thưà cũng như mở rộng view thông qua <code>yield()</code> <code>section</code> hay <code>@parent</code> để thực hiện kế thừa lớp cha. 
+ViewComposer cung cấp cho ta một công cụ để chia sẻ thông tin / data giữa các view rất hiệu quả. Chúng ta cũng có thể inject một service class trực tiếp vào trong blade thông qua <code>@inject</code></p>
+<p>#technology #publish</p>
+<!-- {BearID:1B4B441F-FE8C-4EA5-8A95-A9DB2B126BA4-7689-00002384BD1568C9} -->
+</article>    </main> </div> <script>
+      const root = document.documentElement;
+      const btn = document.getElementById('theme-toggle');
+      const stored = window.localStorage.getItem('note-theme');
+      if (stored === 'dark') {
+        root.classList.remove('theme-light');
+        root.classList.add('theme-dark');
+        if (btn) btn.textContent = '☀️';
+      }
+      btn?.addEventListener('click', () => {
+        const isDark = root.classList.toggle('theme-dark');
+        root.classList.toggle('theme-light', !isDark);
+        window.localStorage.setItem('note-theme', isDark ? 'dark' : 'light');
+        if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+      });
+    </script> </body> </html> 
