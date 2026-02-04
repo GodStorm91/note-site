@@ -235,6 +235,18 @@ const { title = 'Notes', description = '' } = Astro.props;
     color: #df8e1d; /* yellow/orange numbers */
   }
 
+  :global(html.theme-light .hljs-variable),
+  :global(html.theme-light .hljs-title),
+  :global(html.theme-light .hljs-property),
+  :global(html.theme-light .hljs-function) {
+    color: #e64553; /* red-ish identifiers */
+  }
+
+  :global(html.theme-light .hljs-meta),
+  :global(html.theme-light .hljs-meta .hljs-string) {
+    color: #8839ef; /* e.g., >>> prompts */
+  }
+
   :global(html.theme-light .hljs-comment),
   :global(html.theme-light .hljs-quote) {
     color: #9ca0b0;
@@ -264,6 +276,18 @@ const { title = 'Notes', description = '' } = Astro.props;
   :global(html.theme-dark .hljs-symbol),
   :global(html.theme-dark .hljs-bullet) {
     color: #f9e2af; /* yellow numbers */
+  }
+
+  :global(html.theme-dark .hljs-variable),
+  :global(html.theme-dark .hljs-title),
+  :global(html.theme-dark .hljs-property),
+  :global(html.theme-dark .hljs-function) {
+    color: #f38ba8; /* pink-ish identifiers */
+  }
+
+  :global(html.theme-dark .hljs-meta),
+  :global(html.theme-dark .hljs-meta .hljs-string) {
+    color: #fab387; /* prompts etc. */
   }
 
   :global(html.theme-dark .hljs-comment),
