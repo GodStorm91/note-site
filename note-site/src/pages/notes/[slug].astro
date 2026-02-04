@@ -49,7 +49,23 @@ const title = slug
   .replace(/-/g, ' ')
   .replace(/\b\w/g, (c) => c.toUpperCase());
 
-const html = marked.parse(content, { gfm: true, breaks: false });
+let html = marked.parse(content, { gfm: true, breaks: false });
+
+// Heuristic: if a <pre><code> block looks like PHP / Tinker REPL
+// (starts with >>>, contains php artisan, App\\Models, etc.)
+// and has no language class, tag it as language-php so highlight.js
+// can color it properly.
+html = html.replace(/<pre><code>([\s\S]*?)<\/code><\/pre>/g, (match, inner) => {
+  const text = inner.trim();
+  const looksPhp =
+    text.startsWith('>>>') ||
+    text.startsWith('$') ||
+    text.includes('php artisan') ||
+    text.includes('App\\\\Models') ||
+    text.includes('<?php');
+  if (!looksPhp) return match;
+  return `<pre><code class="language-php">${inner}</code></pre>`;
+});
 ---
 
 <BaseLayout title={title}>
