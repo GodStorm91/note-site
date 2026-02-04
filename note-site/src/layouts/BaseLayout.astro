@@ -95,6 +95,14 @@ const { title = 'Notes', description = '' } = Astro.props;
     font-size: 0.9rem;
   }
 
+  :global(.markdown-body img) {
+    max-width: min(100%, 720px);
+    height: auto;
+    display: block;
+    margin: 1.5rem auto;
+    border-radius: 12px;
+  }
+
   :global(.markdown-body th),
   :global(.markdown-body td) {
     border: 1px solid var(--border-subtle);
