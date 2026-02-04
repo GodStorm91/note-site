@@ -19,9 +19,26 @@ function collectNotes(dir: string, baseDir: string): NoteMeta[] {
       const relPath = path.relative(baseDir, fullPath);
       const relDir = path.dirname(relPath) === '.' ? '' : path.dirname(relPath);
       const slug = path.basename(entry.name).replace(/\.mdx?$/, '');
-      const title = slug
+
+      // Derive title from first markdown H1 heading if available, so we
+      // preserve original casing (including Vietnamese) from Bear.
+      let title = slug
         .replace(/-/g, ' ')
         .replace(/\b\w/g, (c) => c.toUpperCase());
+      try {
+        const raw = fs.readFileSync(fullPath, 'utf8');
+        const lines = raw.split(/\r?\n/);
+        for (const line of lines) {
+          const m = line.match(/^#\s+(.+)$/);
+          if (m) {
+            title = m[1].trim();
+            break;
+          }
+        }
+      } catch (e) {
+        console.warn('[notes] failed to read title from', fullPath, e);
+      }
+
       const stat = fs.statSync(fullPath);
       notes.push({ slug, title, category: relDir, mtime: stat.mtimeMs });
     }
