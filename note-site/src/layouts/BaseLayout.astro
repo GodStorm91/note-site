@@ -24,10 +24,10 @@ const { title = 'Notes', description = '' } = Astro.props;
       </main>
     </div>
 
-    <script>
+    <script is:inline>
       const root = document.documentElement;
       const btn = document.getElementById('theme-toggle');
-      const stored = localStorage.getItem('note-theme');
+      const stored = window.localStorage.getItem('note-theme');
       if (stored === 'dark') {
         root.classList.remove('theme-light');
         root.classList.add('theme-dark');
@@ -36,8 +36,8 @@ const { title = 'Notes', description = '' } = Astro.props;
       btn?.addEventListener('click', () => {
         const isDark = root.classList.toggle('theme-dark');
         root.classList.toggle('theme-light', !isDark);
-        localStorage.setItem('note-theme', isDark ? 'dark' : 'light');
-        btn.textContent = isDark ? '☀️' : '🌙';
+        window.localStorage.setItem('note-theme', isDark ? 'dark' : 'light');
+        if (btn) btn.textContent = isDark ? '☀️' : '🌙';
       });
     </script>
   </body>
