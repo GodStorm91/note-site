@@ -1,0 +1,207 @@
+<!DOCTYPE html><html lang="en" class="theme-light" data-astro-cid-37fxchfa> <head><meta charset="utf-8"><title>Laravel Cho NgườI MớI BắT đầUchươNg 4 NgoạI TruyệN QuậY MộT VòNg VớI Laravel Tinker</title><link rel="stylesheet" href="/_astro/_slug_.CSRUKxnt.css">
+<style>body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,SF Pro Text,sans-serif}html.theme-light{--bg: #eff1f5;--bg-card: #ffffff;--text: #4c4f69;--muted: #6c6f85;--accent: #1e66f5;--border-subtle: #ccd0da;--code-bg: #e6e9ef}html.theme-dark{--bg: #1e1e2e;--bg-card: #181825;--text: #cdd6f4;--muted: #a6adc8;--accent: #89b4fa;--border-subtle: #313244;--code-bg: #11111b}.app-root[data-astro-cid-37fxchfa]{min-height:100vh;background:var(--bg);color:var(--text)}.markdown-body,.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4{color:var(--text)}.markdown-body table{width:100%;border-collapse:collapse;margin:.75rem 0 1rem;font-size:.9rem}.markdown-body img{max-width:min(100%,720px);height:auto;display:block;margin:1.5rem auto;border-radius:12px}.markdown-body th,.markdown-body td{border:1px solid var(--border-subtle);padding:.45rem .6rem}.markdown-body th{background:color-mix(in srgb,var(--bg-card) 80%,var(--accent) 10%);font-weight:600}.markdown-body tr:nth-child(2n) td{background:color-mix(in srgb,var(--bg-card) 90%,var(--border-subtle) 10%)}.app-header[data-astro-cid-37fxchfa]{max-width:960px;margin:0 auto;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between}.app-logo[data-astro-cid-37fxchfa]{text-decoration:none;font-weight:700;font-size:1.05rem;color:var(--text)}.app-header-right[data-astro-cid-37fxchfa]{display:flex;align-items:center;gap:.75rem}.header-link[data-astro-cid-37fxchfa]{text-decoration:none;font-size:.9rem;color:var(--muted)}.header-link[data-astro-cid-37fxchfa]:hover{color:var(--accent)}.theme-toggle[data-astro-cid-37fxchfa]{border:1px solid var(--border-subtle);background:#ffffffb3;border-radius:999px;padding:.25rem .65rem;cursor:pointer;font-size:.85rem}html.theme-dark .theme-toggle[data-astro-cid-37fxchfa]{background:#0f172ae6}.app-main[data-astro-cid-37fxchfa]{max-width:960px;margin:0 auto 3rem;padding:0 1.25rem 2rem}.card{background:var(--bg-card);border-radius:16px;border:1px solid var(--border-subtle);box-shadow:0 18px 40px #0f172a1f;padding:1.5rem 1.7rem}html.theme-dark .card{box-shadow:0 18px 40px #000000b3}.muted{color:var(--muted);font-size:.9rem}a{color:var(--accent)}code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}pre{background:var(--code-bg);color:#cdd6f4;padding:.85rem 1rem;border-radius:12px;overflow-x:auto;font-size:.9rem;border:1px solid var(--border-subtle)}pre code{background:transparent;padding:0}code[class*=language-],pre code[class*=language-],.hljs{color:#cdd6f4}.hljs-keyword,.hljs-selector-tag,.hljs-literal{color:#cba6f7}.hljs-string,.hljs-attr,.hljs-template-tag,.hljs-template-variable{color:#a6e3a1}.hljs-number,.hljs-symbol,.hljs-bullet{color:#f9e2af}.hljs-comment,.hljs-quote{color:#6c7086;font-style:italic}
+</style><script type="module" src="/_astro/hoisted.DEooviLn.js"></script></head> <body data-astro-cid-37fxchfa> <div class="app-root" data-astro-cid-37fxchfa> <header class="app-header" data-astro-cid-37fxchfa> <div class="app-header-left" data-astro-cid-37fxchfa> <a href="/" class="app-logo" data-astro-cid-37fxchfa>📝 Laravel Cho NgườI MớI BắT đầUchươNg 4 NgoạI TruyệN QuậY MộT VòNg VớI Laravel Tinker</a> </div> <div class="app-header-right" data-astro-cid-37fxchfa> <a href="/about" class="header-link" data-astro-cid-37fxchfa>About</a> <button id="theme-toggle" class="theme-toggle" type="button" data-astro-cid-37fxchfa>🌙</button> </div> </header> <main class="app-main" data-astro-cid-37fxchfa>  <a href="/" class="muted" style="text-decoration: none;">← Back to notes</a> <article class="markdown-body card" style="margin-top: 1.25rem; padding-top: 1.25rem;"><h1>[Laravel Cho người mới bắt đầu][Chương 4 - Ngoại truyện] Quậy một vòng với Laravel Tinker</h1>
+<h2>## Quậy một vòng với Laravel Tinker</h2>
+<p>Tiếp theo series về Laravel cho người mới bắt đầu chúng ta sẽ tiếp tục tiến đến một công cụ khác rất đặc trưng của Laravel so với các Framework PHP khác đó là <code>artisan</code>
+Và một thứ mình cực kì thích là mình có thể tương tác với đoạn code mình vừa viết thông qua Laravel Tinker.
+Nói sơ qua về Tinker thì bạn có thể tham khảo trong bài viết <a href="https://viblo.asia/p/laravel-tinker-AoDKYNQDzvg">https://viblo.asia/p/laravel-tinker-AoDKYNQDzvg</a>.</p>
+<p>Tuy nhiên việc dựng server và gọi thử hàm là điều cũng hơi phiền phức nên nếu với những bạn đang phát triển web bằng Laravel, thì laravel hỗ trợ chúng ta một command line rất là hữu ích đó là câu lệnh <code>php artisan tinker</code>. Hôm nay mình sẽ nói sơ qua về các mục bên dưới</p>
+<ul>
+<li>Khởi động tinker trong laravel project</li>
+<li>Các thao tác hay thực hiện trong tinker</li>
+<li>List các commands hay dùng của tinker</li>
+</ul>
+<h3>1. Khởi động tinker trong laravel project</h3>
+<p>Ta có thể khởi động tinker tại thư mục gốc của project như bên dưới</p>
+<p><code>php artisan tinker</code></p>
+<p>Khi khởi động câu lệnh bên trên xong kết quả sẽ là</p>
+<pre><code class="language-bash">Psy Shell v0.7.2 (PHP 5.6.23 窶・cli) by Justin Hileman
+ &gt;&gt;&gt;
+</code></pre>
+<p>Sau khi chạy câu lệnh trên , chúng ta có thể access đến Models mà đã tạo trong laravel, chẳng hạn như</p>
+<pre><code class="language-bash">&gt;&gt;&gt; App\Models\Plan::count()
+=&gt; 73597
+</code></pre>
+<p>Hoặc ta có thể tạo mới một instance của model</p>
+<pre><code class="language-bash">&gt;&gt;&gt; $user = new App\Models\User
+=&gt; App\Models\User {#691}
+&gt;&gt;&gt; $user-&gt;username = &quot;ArtisanTest&quot;
+=&gt; &quot;ArtisanTest&quot;
+&gt;&gt;&gt; $user-&gt;email = &quot;Test@gmail.com&quot;
+=&gt; &quot;Test@gmail.com&quot;
+&gt;&gt;&gt; $user-&gt;password = &quot;12345678&quot;
+=&gt; &quot;12345678&quot;
+&gt;&gt;&gt; $user-&gt;role_id = 1
+=&gt; 1
+&gt;&gt;&gt; $user-&gt;valid = 1
+=&gt; 1
+&gt;&gt;&gt; $user-&gt;save()
+=&gt; true
+</code></pre>
+<p>Câu lệnh trên sẽ tạo một user mới và gán nó vào trong biến <code>$user</code>, chúng ta có thể dùng câu lệnh <code>$user-&gt;save()</code> để save user vừa tạo vào trong DB. Và khi kiểm tra ta sẽ thấy kết quả như hình</p>
+<img class="alignnone size-medium wp-image-79" src=" http://nech.info/wp-content/uploads/2016/12/artisan_1-1024x305.png" alt="" width="100%" height="100%" srcset="http://nech.info/wp-content/uploads/2016/12/artisan_1-300x89.png 300w, http://nech.info/wp-content/uploads/2016/12/artisan_1-768x229.png 768w, http://nech.info/wp-content/uploads/2016/12/artisan_1-1024x305.png 1024w, http://nech.info/wp-content/uploads/2016/12/artisan_1-1600x477.png 1600w" sizes="(max-width: 300px) 100vw, 300px" />
+
+<p>Như vậy chúng ta có thể thao tác bằng command line dễ dàng các tác vụ như :</p>
+<ol>
+<li>Thao tác các bảng ghi của bảng</li>
+<li>Truy vấn cột (ví dụ bảng của chúng ta có quá nhiều data)</li>
+<li>Tạo các test data dựa trên các data mẫu</li>
+</ol>
+<h3>2. Các thao tác hay dùng trong tinker</h3>
+<h4>2.1Tôi muốn viết hàm trong tinker có được không ?</h4>
+<p>Câu trả lời là được nhé. Nhưng hẳn nhiên là khi viết hàm, chúng ta nên có dấu xuống dòng cho từng dòng lệnh tách bạch với nhau. Nhưng khi enter thì <code>tinker</code> có thể lầm tưởng rằng đó kết thúc câu lệnh. Để tránh điều này,chúng ta có thể kết thúc từng câu lệnh với kí tự <code>\</code> . Nó  cho phép chúng ta có thể input trên nhiều dòng; mỗi dòng sẽ có bắt đầu là <code>...</code>. REPL sẽ tiếp tục chấp nhận input nhiều dòng. Nào hãy xem ví dụ bên dưới nhé</p>
+<pre><code class="language-bash">&gt;&gt;&gt; function sayHello($userId) { \
+... $user = App\Models\User::find($userId); \
+... return &quot;Hello {$user-&gt;username}-san&quot;;}
+=&gt; null
+&gt;&gt;&gt; sayHello(30)
+=&gt; &quot;Hello kkakass-san&quot;
+</code></pre>
+<p>Nhưng ngộ nhỡ đoạn function trên có lỗi lầm gì thì làm sao mà tôi có thể đọc được stack trace nhỉ</p>
+<pre><code class="language-bash">&gt;&gt;&gt; sayHello(39)
+PHP error:  Trying to get property of non-object on line 4
+</code></pre>
+<p>(Ở đây mình cố ý để ra lỗi, userid 39 là chưa tồn tại trong hệ thống )</p>
+<p>Mình muốn xem đoạn code vừa execute phía trên có lỗi lầm gì không ?</p>
+<p>Ta có thể dùng command line <code>wtf</code> của tinker để xem stacktrace của hàm vừa gọi liền trước đó.</p>
+<pre><code class="language-bash">&gt;&gt;&gt; wtf
+
+
+  [Psy\Exception\ErrorException]
+  PHP error:  Trying to get property of non-object on line 4
+
+
+Exception trace:
+ () at :4
+ Psy\Exception\ErrorException::throwException() at D:\Working\laravel\laravel5-example\vendor
+\psy\psysh\src\Psy\Shell.php:723
+ Psy\Shell-&gt;handleError() at D:\Working\laravel\laravel5-example\vendor\psy\psysh\src\Psy\Exe
+cutionLoop\Loop.php(79) : eval()&#39;d code:4
+ sayHello() at D:\Working\laravel\laravel5-example\vendor\psy\psysh\src\Psy\ExecutionLoop\Loo
+p.php(79) : eval()&#39;d code:1
+ eval() at D:\Working\laravel\laravel5-example\vendor\psy\psysh\src\Psy\ExecutionLoop\Loop.ph
+p:79
+ Psy\ExecutionLoop\{closure}() at D:\Working\laravel\laravel5-example\vendor\psy\psysh\src\Ps
+y\ExecutionLoop\Loop.php:135
+ Psy\ExecutionLoop\Loop-&gt;run() at D:\Working\laravel\laravel5-example\vendor\psy\psysh\src\Ps
+y\Shell.php:307
+ Psy\Shell-&gt;doRun() at D:\Working\laravel\laravel5-example\vendor\symfony\console\Application
+.php:117
+ Symfony\Component\Console\Application-&gt;run() at D:\Working\laravel\laravel5-example\vendor\p
+sy\psysh\src\Psy\Shell.php:273
+ Psy\Shell-&gt;run() at D:\Working\laravel\laravel5-example\vendor\laravel\framework\src\Illumin
+ate\Foundation\Console\TinkerCommand.php:54
+ Illuminate\Foundation\Console\TinkerCommand-&gt;fire() at n/a:n/a
+ call_user_func_array() at D:\Working\laravel\laravel5-example\vendor\laravel\framework\src\I
+lluminate\Container\Container.php:507
+ Illuminate\Container\Container-&gt;call() at D:\Working\laravel\laravel5-example\vendor\laravel
+\framework\src\Illuminate\Console\Command.php:169
+ Illuminate\Console\Command-&gt;execute() at D:\Working\laravel\laravel5-example\vendor\symfony\
+console\Command\Command.php:256
+ Symfony\Component\Console\Command\Command-&gt;run() at D:\Working\laravel\laravel5-example\vend
+or\laravel\framework\src\Illuminate\Console\Command.php:155
+ Illuminate\Console\Command-&gt;run() at D:\Working\laravel\laravel5-example\vendor\symfony\cons
+ole\Application.php:794
+ Symfony\Component\Console\Application-&gt;doRunCommand() at D:\Working\laravel\laravel5-example
+\vendor\symfony\console\Application.php:186
+ Symfony\Component\Console\Application-&gt;doRun() at D:\Working\laravel\laravel5-example\vendor
+\symfony\console\Application.php:117
+ Symfony\Component\Console\Application-&gt;run() at D:\Working\laravel\laravel5-example\vendor\l
+aravel\framework\src\Illuminate\Foundation\Console\Kernel.php:107
+ Illuminate\Foundation\Console\Kernel-&gt;handle() at D:\Working\laravel\laravel5-example\artisa
+n:36
+
+--
+0:  () at :4
+</code></pre>
+<p>Như vậy thì ta có thể trace lỗi dễ dàng hơn rồi.nhỉ</p>
+<h4>2.2 Up/Down site bằng tinker</h4>
+<p>Tinker có hỗ trợ ta một command line để down site xuống ở mode maintainance.</p>
+<p>Ví dụ như câu lệnh bên dưới sẽ <code>down</code> site xuống mode maintainance</p>
+<pre><code class="language-bash">&gt;&gt;&gt; down
+Application is now in maintenance mode.
+&gt;&gt;&gt;
+</code></pre>
+<p>Khi truy xuất trang web ta sẽ thấy hiển thị ra thông báo bên dưới</p>
+<img class="alignnone size-medium wp-image-83" src="http://nech.info/wp-content/uploads/2016/12/artisan_3-1024x488.png" alt="" width="100%" height="100%" srcset="http://nech.info/wp-content/uploads/2016/12/artisan_3-300x143.png 300w, http://nech.info/wp-content/uploads/2016/12/artisan_3-768x366.png 768w,  1024w, http://nech.info/wp-content/uploads/2016/12/artisan_3.png 1535w" sizes="(max-width: 300px) 100vw, 300px" />
+
+<p>Khi chúng ta đã hoàn thành maintainance mode thì chúng ta có thể dùng câu lệnh ngược lại của <code>down</code> là <code>up</code> để mang application của chúng ta <code>go live</code> trở lại</p>
+<pre class="language-bash">>>> up
+Application is now live.</pre>
+
+<p>Vậy là chúng ta đã có thể access trang web một cách bình thường lại rồi</p>
+<hr>
+<h3>3. List các commands của tinker</h3>
+<p>Các command của tinker ta có thể truy xuất qua câu lệnh <code>help</code> trong tinker. Danh sách các command hỗ trợ như bên dưới</p>
+<pre><code class="language-bash">help Show a list of commands. Type `help [foo]` for information about [foo
+]. Aliases: ?
+ ls List local, instance or class variables, methods and constants.
+ Aliases: list, dir
+ dump Dump an object or primitive.
+
+ doc Read the documentation for an object, class, constant, method or prop
+erty. Aliases: rtfm, man
+ show Show the code for an object, class, constant, method or property.
+
+ wtf Show the backtrace of the most recent exception.
+ Aliases: last-exception, wtf?
+ whereami Show where you are in the code.
+
+ throw-up Throw an exception out of the Psy Shell.
+
+ trace Show the current call stack.
+
+ buffer Show (or clear) the contents of the code input buffer.
+ Aliases: buf
+ clear Clear the Psy Shell screen.
+
+ history Show the Psy Shell history.
+ Aliases: hist
+ exit End the current session and return to caller.
+ Aliases: quit, q
+ clear-compiled Remove the compiled class file
+
+ down Put the application into maintenance mode
+
+ env Display the current framework environment
+
+ optimize Optimize the framework for better performance
+
+ up Bring the application out of maintenance mode
+
+ migrate Run the database migrations
+
+ inspire Display an inspiring quote
+</code></pre>
+<h3>Kết luận</h3>
+<p>Hi cọng chúng ta sẽ có thể dùng <code>php artisan tinker</code> để hỗ trợ công việc develop , cũng như thực hiện testing ut các đoạn code mà mình đã viết ra để có những đoạn code chất lượng hơn.
+Phần chính về Laravel tinker cũng như các command của nó mình sẽ publish trong vài ngày tới. Phần artisan và tinker sẽ đề cập đến</p>
+<ul>
+<li>Artisan là gì</li>
+<li>Các commands cơ bản mà artisan đã hỗ trợ</li>
+<li>Tôi muốn viết custom commands có được không ?</li>
+<li>Nhận tham số đầu vào của custom artisan như thế nào ?</li>
+<li>Gọi artisan command trong một method khác có được không ? (ví dụ mình gọi trong một method nào đó của controller chẳng hạn)</li>
+</ul>
+<h3>Ngoại truyện:</h3>
+<p><em>Question : Tại sao tinker lại chạy được</em> </p>
+<blockquote>
+<p>Thật ra tinker được dựa trên PsySH một REPL (Read Eval Print Loop), console (tạm dịch là “Đọc - Thực Thi - Print kết quả - Đọc tiếp (chờ input từ console)” . 
+Bạn có thể tìm hiểu kỹ hơn ở đây (tiếng Anh). 
+<a href="https://presentate.com/bobthecow/talks/php-for-pirates#slide-61">https://presentate.com/bobthecow/talks/php-for-pirates#slide-61</a></p>
+</blockquote>
+<p><em>Question : Tại sao tôi lại cần cái này  (dd) là đủ rồi mà</em></p>
+<blockquote>
+<p>Giả sử khi chúng ta vừa mới viết một đoạn code xong, chúng ta muốn tương tác trực tiếp với code của mình chúng ta có thể làm kiểu </p>
+</blockquote>
+<pre><code class="language-bash">&gt;&gt;&gt; $myFreshNewClass = app(FreshNewClass::class)
+&gt;&gt;&gt; $myFreshNewClass-&gt;testMethod(&#39;param1&#39;, &#39;param2&#39;)
+&gt;&gt;&gt; // see your result here
+ 
+</code></pre>
+<blockquote>
+<p>Chẳng phải thế này chúng ta có thể tự UT (với một vài trường hợp <code>testMethod</code> mà ta vừa viết sao ? Thường thì mình sẽ tương tác với code mình vừa viết và note lại những command mình tương tác với nó vào trong Unit Test của class đó. </p>
+</blockquote>
+<p>#technology  #laravel #blog #blog/laravel/for_beginners #publish</p>
+<!-- {BearID:24F24A33-FA2D-427A-BA14-7C7D6BAC44F7-7689-0000670F5DC0C055} -->
+</article>    </main> </div>  </body> </html> 
