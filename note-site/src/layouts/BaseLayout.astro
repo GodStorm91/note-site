@@ -198,7 +198,6 @@ const { title = 'Notes', description = '' } = Astro.props;
 
   :global(pre) {
     background: var(--code-bg);
-    color: #cdd6f4; /* catppuccin mocha text */
     padding: 0.85rem 1rem;
     border-radius: 12px;
     overflow-x: auto;
@@ -211,34 +210,64 @@ const { title = 'Notes', description = '' } = Astro.props;
     padding: 0;
   }
 
-  /* basic catppuccin-style highlight colors */
-  :global(code[class*="language-"]),
-  :global(pre code[class*="language-"]),
-  :global(.hljs) {
-    color: #cdd6f4;
+  /* LIGHT THEME – Catppuccin Latte-ish */
+  :global(html.theme-light pre code),
+  :global(html.theme-light .hljs) {
+    color: #4c4f69; /* main text */
   }
 
-  :global(.hljs-keyword),
-  :global(.hljs-selector-tag),
-  :global(.hljs-literal) {
-    color: #cba6f7;
+  :global(html.theme-light .hljs-keyword),
+  :global(html.theme-light .hljs-selector-tag),
+  :global(html.theme-light .hljs-literal) {
+    color: #1e66f5; /* blue keyword */
   }
 
-  :global(.hljs-string),
-  :global(.hljs-attr),
-  :global(.hljs-template-tag),
-  :global(.hljs-template-variable) {
-    color: #a6e3a1;
+  :global(html.theme-light .hljs-string),
+  :global(html.theme-light .hljs-attr),
+  :global(html.theme-light .hljs-template-tag),
+  :global(html.theme-light .hljs-template-variable) {
+    color: #40a02b; /* green string */
   }
 
-  :global(.hljs-number),
-  :global(.hljs-symbol),
-  :global(.hljs-bullet) {
-    color: #f9e2af;
+  :global(html.theme-light .hljs-number),
+  :global(html.theme-light .hljs-symbol),
+  :global(html.theme-light .hljs-bullet) {
+    color: #df8e1d; /* yellow/orange numbers */
   }
 
-  :global(.hljs-comment),
-  :global(.hljs-quote) {
+  :global(html.theme-light .hljs-comment),
+  :global(html.theme-light .hljs-quote) {
+    color: #9ca0b0;
+    font-style: italic;
+  }
+
+  /* DARK THEME – Catppuccin Mocha-ish */
+  :global(html.theme-dark pre code),
+  :global(html.theme-dark .hljs) {
+    color: #cdd6f4; /* main text */
+  }
+
+  :global(html.theme-dark .hljs-keyword),
+  :global(html.theme-dark .hljs-selector-tag),
+  :global(html.theme-dark .hljs-literal) {
+    color: #cba6f7; /* lavender keyword */
+  }
+
+  :global(html.theme-dark .hljs-string),
+  :global(html.theme-dark .hljs-attr),
+  :global(html.theme-dark .hljs-template-tag),
+  :global(html.theme-dark .hljs-template-variable) {
+    color: #a6e3a1; /* green string */
+  }
+
+  :global(html.theme-dark .hljs-number),
+  :global(html.theme-dark .hljs-symbol),
+  :global(html.theme-dark .hljs-bullet) {
+    color: #f9e2af; /* yellow numbers */
+  }
+
+  :global(html.theme-dark .hljs-comment),
+  :global(html.theme-dark .hljs-quote) {
     color: #6c7086;
     font-style: italic;
   }
