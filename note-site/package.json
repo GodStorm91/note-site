@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && rm -rf docs && mv dist docs",
+    "build": "astro build && rm -rf ../docs && mv dist ../docs",
     "preview": "astro preview",
     "sync-bear": "bash scripts/run-bear-export.sh",
     "bear-callback": "node scripts/bear-callback-server.mjs"
