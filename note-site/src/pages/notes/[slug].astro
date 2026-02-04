@@ -75,10 +75,8 @@ html = html.replace(/<pre><code>([\s\S]*?)<\/code><\/pre>/g, (match, inner) => {
     style="margin-top: 1.25rem; padding-top: 1.25rem;"
     set:html={html}
   />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-  <script>
-    if (window.hljs) {
-      window.hljs.highlightAll();
-    }
-  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"
+    onload="window.hljs && window.hljs.highlightAll()"
+  ></script>
 </BaseLayout>
