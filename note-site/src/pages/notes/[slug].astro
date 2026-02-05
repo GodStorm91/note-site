@@ -92,7 +92,7 @@ html = html.replace(/<pre><code>([\s\S]*?)<\/code><\/pre>/g, (match, inner) => {
       {tags.map((tag) => (
         <a
           href={`/tags/${encodeURIComponent(tag.toLowerCase().replace(/[\s/]+/g, '-'))}`}
-          style="margin-left: 0.35rem; text-decoration: none;"
+          class="tag-pill"
         >
           #{tag}
         </a>

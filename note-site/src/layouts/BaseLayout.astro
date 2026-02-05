@@ -15,6 +15,7 @@ const { title = 'Notes', description = '' } = Astro.props;
           <a href="/" class="app-logo">📝 {title}</a>
         </div>
         <div class="app-header-right">
+          <a href="/tags" class="header-link">Tags</a>
           <a href="/about" class="header-link">About</a>
           <button id="theme-toggle" class="theme-toggle" type="button">🌙</button>
         </div>
@@ -167,6 +168,21 @@ const { title = 'Notes', description = '' } = Astro.props;
     max-width: 960px;
     margin: 0 auto 3rem;
     padding: 0 1.25rem 2rem;
+  }
+
+  :global(.tag-pill) {
+    display: inline-block;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-subtle);
+    background: color-mix(in srgb, var(--bg-card) 90%, var(--border-subtle) 10%);
+    font-size: 0.8rem;
+    text-decoration: none;
+    margin-left: 0.35rem;
+  }
+
+  :global(.tag-pill:hover) {
+    border-color: var(--accent);
   }
 
   :global(.card) {
