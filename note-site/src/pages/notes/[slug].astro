@@ -42,6 +42,16 @@ if (fs.existsSync(filePathMd)) {
   throw new Error(`Note not found for slug: ${slug}`);
 }
 
+// Collect inline hashtags as tags (e.g. #laravel #blog), but ignore #publish
+const tagMatches = content.match(/(^|\s)#([\p{L}\p{N}_/+-]+)/gu) || [];
+const tags = Array.from(
+  new Set(
+    tagMatches
+      .map((m) => m.replace(/^\s*#/, '').trim())
+      .filter((tag) => tag && !tag.toLowerCase().startsWith('publish'))
+  )
+);
+
 // Rewrite BearImages relative paths to root-relative so Astro can serve from /public/BearImages
 content = content.replace(/\(BearImages\//g, '(/BearImages/');
 
@@ -75,6 +85,21 @@ html = html.replace(/<pre><code>([\s\S]*?)<\/code><\/pre>/g, (match, inner) => {
     style="margin-top: 1.25rem; padding-top: 1.25rem;"
     set:html={html}
   />
+
+  {tags.length > 0 && (
+    <div style="margin-top: 1rem; font-size: 0.85rem;" class="muted">
+      Tags:
+      {tags.map((tag) => (
+        <a
+          href={`/tags/${encodeURIComponent(tag.toLowerCase().replace(/[\s/]+/g, '-'))}`}
+          style="margin-left: 0.35rem; text-decoration: none;"
+        >
+          #{tag}
+        </a>
+      ))}
+    </div>
+  )}
+
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"
     onload="window.hljs && window.hljs.highlightAll()"
