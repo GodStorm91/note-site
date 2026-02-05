@@ -5,4 +5,7 @@ export default defineConfig({
   integrations: [mdx()],
   srcDir: 'src',
   site: 'https://n.khanh.page',
+  build: {
+    inlineStylesheets: 'always',
+  },
 });

@@ -85,6 +85,29 @@ const grouped = flatNotes.reduce((acc, note) => {
   return acc;
 }, {} as Record<string, NoteMeta[]>);
 
+// Collect popular tags
+const tagCount = new Map<string, number>();
+for (const note of flatNotes) {
+  const fullPath = path.join(notesDir, `${note.slug}.md`);
+  if (!fs.existsSync(fullPath)) continue;
+  const raw = fs.readFileSync(fullPath, 'utf8');
+  const matches = raw.match(/(^|\s)#([\p{L}\p{N}_/+-]+)/gu) || [];
+  const tagsForNote = Array.from(
+    new Set(
+      matches
+        .map((m) => m.replace(/^\s*#/, '').trim().toLowerCase())
+        .filter((t) => t && !t.startsWith('publish'))
+    )
+  );
+  for (const t of tagsForNote) {
+    tagCount.set(t, (tagCount.get(t) || 0) + 1);
+  }
+}
+
+const popularTags = Array.from(tagCount.entries())
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .slice(0, 6);
+
 // Within each category, keep notes ordered by mtime desc
 for (const key of Object.keys(grouped)) {
   grouped[key].sort((a, b) => b.mtime - a.mtime);
@@ -115,6 +138,21 @@ const categories = Object.keys(grouped).sort((a, b) => {
         />
       </div>
     </div>
+
+    {popularTags.length > 0 && (
+      <p class="muted" style="margin:0.25rem 0 0.5rem; font-size:0.85rem;">
+        Popular tags:
+        {popularTags.map(([tag, count]) => (
+          <a
+            href={`/tags/${encodeURIComponent(tag.toLowerCase().replace(/[\s/]+/g, '-'))}`}
+            class="tag-pill"
+          >
+            #{tag}
+            <span style="font-size:0.8em; opacity:0.7; margin-left:0.1rem;">({count})</span>
+          </a>
+        ))}
+      </p>
+    )}
 
     {flatNotes.length === 0 ? (
       <p style="margin-top:1rem;">Chưa có note nào sync từ Bear. Thử gắn tag <code>#publish</code> rồi chạy <code>npm run sync-bear</code>.</p>
