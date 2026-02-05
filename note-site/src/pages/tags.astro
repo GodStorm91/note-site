@@ -36,8 +36,13 @@ const tags = Array.from(tagCount.entries()).sort((a, b) => b[1] - a[1] || a[0].l
     ) : (
       <ul style="margin:0.75rem 0 0; padding-left:1.1rem;">
         {tags.map(([tag, count]) => (
-          <li>
-            <a href={`/tags/${encodeURIComponent(tag.toLowerCase().replace(/[\s/]+/g, '-'))}`}>#{tag}</a>
+          <li style="margin-bottom:0.3rem;">
+            <a
+              href={`/tags/${encodeURIComponent(tag.toLowerCase().replace(/[\s/]+/g, '-'))}`}
+              class="tag-pill"
+            >
+              #{tag}
+            </a>
             <span class="muted" style="margin-left:0.4rem; font-size:0.8rem;">{count} note</span>
           </li>
         ))}
