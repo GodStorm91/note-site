@@ -1,0 +1,103 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+interface NoteMeta {
+
+  slug: string;
+  title: string;
+  mtime: number;
+}
+
+export async function getStaticPaths() {
+  const notesDir = path.join(process.cwd(), 'src', 'content', 'notes');
+  const entriesAll = fs.readdirSync(notesDir).filter((f) => f.endsWith('.md') || f.endsWith('.mdx'));
+  const tags = new Set<string>();
+
+  for (const file of entriesAll) {
+    const fullPath = path.join(notesDir, file);
+    const raw = fs.readFileSync(fullPath, 'utf8');
+    const matches = raw.match(/(^|\s)#([\p{L}\p{N}_/+-]+)/gu) || [];
+    const tagsForFile = Array.from(
+      new Set(
+        matches
+          .map((m) => m.replace(/^\s*#/, '').trim().toLowerCase())
+          .filter((t) => t && !t.startsWith('publish'))
+      )
+    );
+    for (const t of tagsForFile) {
+      tags.add(t.toLowerCase().replace(/[\s/]+/g, '-'));
+    }
+  }
+
+  return Array.from(tags).map((tag) => ({ params: { tag } }));
+}
+
+const { tag } = Astro.params;
+
+if (!tag) {
+  throw new Error('Missing tag param');
+}
+
+const tagParam = String(tag).toLowerCase();
+
+const notesDir = path.join(process.cwd(), 'src', 'content', 'notes');
+const entriesAll = fs.readdirSync(notesDir).filter((f) => f.endsWith('.md') || f.endsWith('.mdx'));
+
+const notes: NoteMeta[] = [];
+
+for (const file of entriesAll) {
+  const fullPath = path.join(notesDir, file);
+  const raw = fs.readFileSync(fullPath, 'utf8');
+  const matches = raw.match(/(^|\s)#([\p{L}\p{N}_/+-]+)/gu) || [];
+  const tagsForFile = Array.from(
+    new Set(
+      matches
+        .map((m) => m.replace(/^\s*#/, '').trim().toLowerCase())
+        .filter((t) => t && !t.startsWith('publish'))
+    )
+  );
+  const slugsForFile = tagsForFile.map((t) => t.toLowerCase().replace(/[\s/]+/g, '-'));
+  if (!slugsForFile.includes(tagParam)) continue;
+
+  const slug = file.replace(/\.mdx?$/, '');
+
+  // Try to derive title from first H1
+  let title = slug
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+  try {
+    const lines = raw.split(/\r?\n/);
+    for (const line of lines) {
+      const m = line.match(/^#\s+(.+)$/);
+      if (m) {
+        title = m[1].trim();
+        break;
+      }
+    }
+  } catch {}
+
+  const stat = fs.statSync(fullPath);
+  notes.push({ slug, title, mtime: stat.mtimeMs });
+}
+
+notes.sort((a, b) => b.mtime - a.mtime);
+---
+
+<BaseLayout title={`Tag: #${tagParam}`}>
+  <section class="card">
+    <h1>Tag: #{tagParam}</h1>
+    {notes.length === 0 ? (
+      <p class="muted">Chưa có note nào với tag này.</p>
+    ) : (
+      <ul>
+        {notes.map((note) => (
+          <li>
+            <a href={`/notes/${note.slug}`}>{note.title}</a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+</BaseLayout>
