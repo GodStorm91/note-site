@@ -48,6 +48,8 @@ const { title = 'Notes', description = '' } = Astro.props;
   :global(body) {
     margin: 0;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+    font-size: 17px;
+    line-height: 1.5;
   }
 
   :global(html.theme-light) {
@@ -168,6 +170,38 @@ const { title = 'Notes', description = '' } = Astro.props;
     max-width: 960px;
     margin: 0 auto 3rem;
     padding: 0 1.25rem 2rem;
+  }
+
+  @media (max-width: 640px) {
+    .app-header {
+      padding: 0.75rem 0.75rem;
+    }
+
+    .app-main {
+      max-width: 100%;
+      padding: 0 0.75rem 1.75rem;
+      margin: 0 auto 2.25rem;
+    }
+
+    :global(.card) {
+      padding: 1.05rem 1.05rem;
+      border-radius: 10px;
+    }
+
+    :global(.markdown-body) {
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    :global(h1),
+    :global(h2),
+    :global(h3) {
+      line-height: 1.25;
+    }
+
+    .app-logo {
+      font-size: 1rem;
+    }
   }
 
   :global(.tag-pill) {
