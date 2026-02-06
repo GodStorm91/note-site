@@ -48,7 +48,8 @@ const { title = 'Notes', description = '' } = Astro.props;
   :global(body) {
     margin: 0;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-    font-size: 16px;
+    font-size: 17px;
+    line-height: 1.5;
   }
 
   :global(html.theme-light) {
@@ -187,7 +188,8 @@ const { title = 'Notes', description = '' } = Astro.props;
     }
 
     :global(.markdown-body) {
-      font-size: 0.96rem;
+      font-size: 1.05rem;
+      line-height: 1.6;
     }
 
     :global(h1),
