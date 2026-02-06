@@ -226,13 +226,42 @@ const { title = 'Notes', description = '' } = Astro.props;
   :global(.card) {
     background: var(--bg-card);
     border-radius: 16px;
-    border: 1px solid var(--border-subtle);
-    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+    border: 1px solid color-mix(in srgb, var(--border-subtle) 80%, transparent 20%);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
     padding: 1.5rem 1.7rem;
   }
 
   :global(html.theme-dark .card) {
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Bear-like reading typography */
+  :global(.markdown-body h1) {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  :global(.markdown-body h2) {
+    font-size: 1.3rem;
+    margin-top: 1.6rem;
+    margin-bottom: 0.4rem;
+  }
+
+  :global(.markdown-body h3) {
+    font-size: 1.1rem;
+    margin-top: 1.4rem;
+    margin-bottom: 0.35rem;
+  }
+
+  :global(.markdown-body p) {
+    margin-top: 0.6rem;
+    margin-bottom: 0.4rem;
+  }
+
+  :global(.markdown-body li) {
+    margin: 0.25rem 0;
   }
 
   :global(.muted) {
