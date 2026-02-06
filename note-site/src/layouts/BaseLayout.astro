@@ -174,17 +174,18 @@ const { title = 'Notes', description = '' } = Astro.props;
 
   @media (max-width: 640px) {
     .app-header {
-      padding: 0.75rem 0.9rem;
+      padding: 0.75rem 0.75rem;
     }
 
     .app-main {
-      padding: 0 0.9rem 1.75rem;
-      margin-bottom: 2.25rem;
+      max-width: 100%;
+      padding: 0 0.75rem 1.75rem;
+      margin: 0 auto 2.25rem;
     }
 
     :global(.card) {
-      padding: 1.1rem 1.2rem;
-      border-radius: 12px;
+      padding: 1.05rem 1.05rem;
+      border-radius: 10px;
     }
 
     :global(.markdown-body) {
