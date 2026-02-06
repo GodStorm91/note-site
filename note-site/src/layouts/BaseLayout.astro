@@ -240,6 +240,27 @@ const { title = 'Notes', description = '' } = Astro.props;
     font-size: 0.9rem;
   }
 
+  :global(.note-row) {
+    display: block;
+  }
+
+  :global(.note-title) {
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  :global(.note-excerpt) {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 0.15rem;
+  }
+
+  :global(.note-meta) {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+
   :global(a) {
     color: var(--accent);
   }

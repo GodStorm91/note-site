@@ -5,7 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const notesDir = path.join(process.cwd(), 'src', 'content', 'notes');
 
-type NoteMeta = { slug: string; title: string; category: string; mtime: number };
+type NoteMeta = { slug: string; title: string; category: string; mtime: number; excerpt: string };
 
 function collectNotes(dir: string, baseDir: string): NoteMeta[] {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -25,22 +25,29 @@ function collectNotes(dir: string, baseDir: string): NoteMeta[] {
       let title = slug
         .replace(/-/g, ' ')
         .replace(/\b\w/g, (c) => c.toUpperCase());
+      let excerpt = '';
       try {
         const raw = fs.readFileSync(fullPath, 'utf8');
         const lines = raw.split(/\r?\n/);
+        let seenTitle = false;
         for (const line of lines) {
           const m = line.match(/^#\s+(.+)$/);
-          if (m) {
+          if (m && !seenTitle) {
             title = m[1].trim();
-            break;
+            seenTitle = true;
+            continue;
+          }
+          // simple excerpt: first non-empty, non-heading line
+          if (!excerpt && line.trim() && !line.trim().startsWith('#')) {
+            excerpt = line.trim();
           }
         }
       } catch (e) {
-        console.warn('[notes] failed to read title from', fullPath, e);
+        console.warn('[notes] failed to read title/excerpt from', fullPath, e);
       }
 
       const stat = fs.statSync(fullPath);
-      notes.push({ slug, title, category: relDir, mtime: stat.mtimeMs });
+      notes.push({ slug, title, category: relDir, mtime: stat.mtimeMs, excerpt });
     }
   }
 
@@ -123,7 +130,7 @@ const categories = Object.keys(grouped).sort((a, b) => {
 ---
 
 <BaseLayout title="Notes">
-  <section class="card">
+  <section class="card" style="box-shadow:none; border-radius:14px;">
     <div style="display:flex; justify-content:space-between; gap:1rem; align-items:center; margin-bottom:0.75rem;">
       <div>
         <h1 style="margin:0 0 0.25rem; font-size:1.6rem;">Notes</h1>
@@ -157,16 +164,24 @@ const categories = Object.keys(grouped).sort((a, b) => {
     {flatNotes.length === 0 ? (
       <p style="margin-top:1rem;">Chưa có note nào sync từ Bear. Thử gắn tag <code>#publish</code> rồi chạy <code>npm run sync-bear</code>.</p>
     ) : (
-      <div id="notes-list" style="margin-top:0.75rem; display:flex; flex-direction:column; gap:1rem;">
+      <div id="notes-list" style="margin-top:0.75rem;">
         {categories.map((cat) => (
           <section class="notes-section" data-category={cat}>
-            <h2 style="font-size:1rem; margin:0 0 0.35rem;">
-              {cat === 'root' ? 'Other' : cat}
-            </h2>
-            <ul style="margin:0; padding-left:1.1rem;">
-              {grouped[cat].map((note) => (
-                <li class="note-item" data-title={note.title.toLowerCase()} data-category={note.category.toLowerCase()}>
-                  <a href={`/notes/${note.slug}`}>{note.title}</a>
+            <ul style="margin:0; padding-left:0; list-style:none;">
+              {grouped[cat].map((note, idx) => (
+                <li
+                  class="note-item"
+                  data-title={note.title.toLowerCase()}
+                  data-category={note.category.toLowerCase()}
+                  style="border-bottom:1px solid var(--border-subtle); padding:0.5rem 0;"
+                >
+                  <a href={`/notes/${note.slug}`} class="note-row" style="text-decoration:none;">
+                    <div class="note-title">{note.title}</div>
+                    {note.excerpt && (
+                      <div class="note-excerpt">{note.excerpt}</div>
+                    )}
+                    <div class="note-meta">{new Date(note.mtime).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+                  </a>
                 </li>
               ))}
             </ul>
