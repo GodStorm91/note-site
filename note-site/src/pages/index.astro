@@ -7,6 +7,16 @@ const notesDir = path.join(process.cwd(), 'src', 'content', 'notes');
 
 type NoteMeta = { slug: string; title: string; category: string; mtime: number; excerpt: string };
 
+function makeExcerpt(raw: string): string {
+  // Remove image markdown and BearImages references
+  let text = raw.replace(/!\[[^\]]*\]\([^)]*\)/g, '');
+  text = text.replace(/!\([^)]*\)/g, '');
+  // Collapse whitespace
+  text = text.replace(/\s+/g, ' ').trim();
+  if (text.length <= 160) return text;
+  return text.slice(0, 160).trimEnd() + '…';
+}
+
 function collectNotes(dir: string, baseDir: string): NoteMeta[] {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   const notes: NoteMeta[] = [];
@@ -30,17 +40,22 @@ function collectNotes(dir: string, baseDir: string): NoteMeta[] {
         const raw = fs.readFileSync(fullPath, 'utf8');
         const lines = raw.split(/\r?\n/);
         let seenTitle = false;
+        const bodyLines: string[] = [];
         for (const line of lines) {
-          const m = line.match(/^#\s+(.+)$/);
+          const trimmed = line.trim();
+          const m = trimmed.match(/^#\s+(.+)$/);
           if (m && !seenTitle) {
             title = m[1].trim();
             seenTitle = true;
             continue;
           }
-          // simple excerpt: first non-empty, non-heading line
-          if (!excerpt && line.trim() && !line.trim().startsWith('#')) {
-            excerpt = line.trim();
-          }
+          if (!trimmed) continue;
+          if (trimmed.startsWith('#')) continue;
+          if (trimmed.startsWith('![') || trimmed.startsWith('!(')) continue;
+          bodyLines.push(trimmed);
+        }
+        if (bodyLines.length > 0) {
+          excerpt = makeExcerpt(bodyLines.join(' '));
         }
       } catch (e) {
         console.warn('[notes] failed to read title/excerpt from', fullPath, e);
